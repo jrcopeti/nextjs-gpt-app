@@ -1,7 +1,11 @@
 "use client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import TourInfo from "./TourInfo";
-import { generateTourResponse } from "@/utils/actions";
+import {
+  createNewTour,
+  generateTourResponse,
+  getExistingTour,
+} from "@/utils/actions";
 import toast from "react-hot-toast";
 
 interface Destination {
@@ -10,21 +14,32 @@ interface Destination {
 }
 
 function NewTour() {
+  const queryClient = useQueryClient();
+
   const {
-    mutate: createNewTour,
+    mutate: createNewTourOnSubmit,
     isPending,
     data: tour,
   } = useMutation({
     mutationFn: async (destination: Destination) => {
-      const newTour = await generateTourResponse(destination);
-
-      if (!newTour) {
-        toast.error("No matching tours found");
-        return null;
+      const existingTour = await getExistingTour(destination);
+      console.log("existingTour", existingTour);
+      if (existingTour) {
+        return existingTour;
       }
 
-      console.log("new tour", newTour)
-      return newTour;
+      const newTour = await generateTourResponse(destination);
+      console.log("newTour", newTour)
+
+      if (newTour) {
+        const response = await createNewTour(newTour);
+        console.log("response", response);
+        queryClient.invalidateQueries({ queryKey: ["tours"] });
+        return newTour
+      }
+
+      toast.error("No matching tours found");
+      return null;
     },
   });
 
@@ -36,7 +51,7 @@ function NewTour() {
       country: formData.get("country") as string,
     };
     console.log(destination);
-    createNewTour(destination);
+    createNewTourOnSubmit(destination);
   };
 
   if (isPending) {
