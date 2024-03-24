@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { FaArrowUpFromBracket } from "react-icons/fa6";
 import { IoPerson } from "react-icons/io5";
 import { RiRobot2Line } from "react-icons/ri";
+import Typewriter from "./Typewriter";
 
 interface QueryProps {
   role: string;
@@ -46,13 +47,16 @@ function Chat() {
         {messages.map(({ role, content }, index) => {
           const avatar = role === "user" ? <IoPerson /> : <RiRobot2Line />;
           const background = role === "user" ? "bg-base-200" : "bg-base-100";
+          const displayContent = role === "user" ? content : <Typewriter text={content} delay={40} />;
           return (
             <div
               key={index}
               className={`${background} -mx-8 flex border-b border-base-300 px-8 py-6 text-lg leading-loose`}
             >
               <span className="mr-4 text-xl text-primary">{avatar}</span>
-              <p className="max-w-3xl">{content}</p>
+              <div className="max-w-3xl">
+                <span>{displayContent}</span>
+                </div>
             </div>
           );
         })}
