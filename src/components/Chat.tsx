@@ -1,6 +1,6 @@
 "use client";
 
-import { generateChatResponse } from "@/utils/action";
+import { generateChatResponse } from "@/utils/actions";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -10,7 +10,7 @@ import { RiRobot2Line } from "react-icons/ri";
 import Typewriter from "./Typewriter";
 
 interface QueryProps {
-  role: string;
+  role: "user" | "assistant" | "system" | "function";
   content: string | null;
 }
 
@@ -34,10 +34,10 @@ function Chat() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const query = { role: "user", content: inputText };
+    const query: QueryProps = { role: "user", content: inputText };
 
     createQuery(query);
-    setMessages((prev) => [...prev, query]);
+    setMessages((prev: QueryProps[]) => [...prev, query]);
     setInputText("");
   };
 
@@ -47,7 +47,13 @@ function Chat() {
         {messages.map(({ role, content }, index) => {
           const avatar = role === "user" ? <IoPerson /> : <RiRobot2Line />;
           const background = role === "user" ? "bg-base-200" : "bg-base-100";
-          const displayContent = role === "user" ? content : <Typewriter text={content} delay={40} />;
+          const displayContent =
+            role === "user" ? (
+              content
+            ) : (
+              <Typewriter text={content} delay={40} />
+            );
+
           return (
             <div
               key={index}
@@ -56,7 +62,7 @@ function Chat() {
               <span className="mr-4 text-xl text-primary">{avatar}</span>
               <div className="max-w-3xl">
                 <span>{displayContent}</span>
-                </div>
+              </div>
             </div>
           );
         })}
