@@ -1,12 +1,13 @@
 "use client";
+
 import { useEffect, useState } from "react";
 
-interface TypewriterProps {
+interface TypewriterEffect {
   text: string | null;
   delay: number;
 }
 
-function Typewriter({ text, delay }: TypewriterProps) {
+function TypewriterEffect({ text, delay }: TypewriterEffect) {
   const [currentText, setCurrentText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -24,4 +25,4 @@ function Typewriter({ text, delay }: TypewriterProps) {
   return <span>{currentText}</span>;
 }
 
-export default Typewriter;
+export default TypewriterEffect;

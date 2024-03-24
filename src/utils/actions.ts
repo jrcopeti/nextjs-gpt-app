@@ -42,6 +42,9 @@ export const generateTourResponse = async ({
   city,
   country,
 }: QueryTourProps) => {
+  if (typeof process.env.NEXT_PUBLIC_PROMPT === "undefined") {
+    throw new Error("NEXT_PUBLIC_PROMPT environment variable is undefined.");
+  }
   const prompt = process.env.NEXT_PUBLIC_PROMPT.replace(
     /{{city}}/g,
     city,
@@ -88,8 +91,47 @@ export const getExistingTour = async ({ city, country }: QueryTourProps) => {
   });
 };
 
-export const createNewTour = async (tour) => {
+export interface TourProps {
+  city: string;
+  country: string;
+  title: string;
+  description: string;
+  stops: string[];
+}
+
+export const createNewTour = async (tour: TourProps) => {
   return prisma.tour.create({
     data: tour,
   });
+};
+
+export const getAllTours = async (searchTerm: string) => {
+  if (!searchTerm) {
+    const allTours = await prisma.tour.findMany({
+      orderBy: {
+        city: "asc",
+      },
+    });
+    return allTours;
+  }
+  const allTours = await prisma.tour.findMany({
+    where: {
+      OR: [
+        {
+          city: {
+            contains: searchTerm,
+          },
+        },
+        {
+          country: {
+            contains: searchTerm,
+          },
+        },
+      ],
+    },
+    orderBy: {
+      city: "asc",
+    },
+  });
+  return allTours;
 };

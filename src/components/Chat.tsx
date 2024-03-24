@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { FaArrowUpFromBracket } from "react-icons/fa6";
 import { IoPerson } from "react-icons/io5";
 import { RiRobot2Line } from "react-icons/ri";
-import Typewriter from "./Typewriter";
+import TypewriterEffect from "./TypewriterEffect";
 
 interface QueryProps {
   role: "user" | "assistant" | "system" | "function";
@@ -51,7 +51,7 @@ function Chat() {
             role === "user" ? (
               content
             ) : (
-              <Typewriter text={content} delay={40} />
+              <TypewriterEffect text={content} delay={40} />
             );
 
           return (
