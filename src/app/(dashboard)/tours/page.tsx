@@ -10,7 +10,7 @@ async function AllToursPage() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["tours"],
+    queryKey: ["tours", ""],
     queryFn: () => getAllTours(),
   });
 

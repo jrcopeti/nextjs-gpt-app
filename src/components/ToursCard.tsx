@@ -1,13 +1,5 @@
 import Link from "next/link";
-
-interface ToursListProps {
-  id: number;
-  city: string;
-  country: string;
-  title: string;
-  description: string;
-  stops: string[];
-}
+import { ToursListProps } from "./ToursList";
 
 function ToursCard({ tour }: { tour: ToursListProps }) {
   const { id, city, country, title } = tour;

@@ -1,12 +1,15 @@
 import ToursCard from "./ToursCard";
 
 export interface ToursListProps {
-  id: number;
+  id: string;
   city: string;
   country: string;
+  createdAt: Date;
+  updatedAt: Date;
   title: string;
   description: string;
-  stops: string[];
+  image: string | null;
+  stops: string[]
 }
 
 function ToursList({ tours }: { tours: ToursListProps[] }) {
