@@ -14,6 +14,7 @@ import { useAuth } from "@clerk/nextjs";
 interface Destination {
   city: string;
   country: string;
+  userId: string;
 }
 
 function NewTour() {
@@ -57,8 +58,9 @@ function NewTour() {
         return null;
       }
 
-      const response = await createNewTour(newTour.tour);
+      const response = await createNewTour({ ...newTour.tour, userId });
       console.log("response", response);
+
       queryClient.invalidateQueries({ queryKey: ["tours"] });
       const updatedTokens = await subtractedTokens(userId, newTour.tokens ?? 0);
       toast.success(`You have ${updatedTokens} tokens left.`);
@@ -69,11 +71,13 @@ function NewTour() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+
     const destination: Destination = {
       city: formData.get("city") as string,
       country: formData.get("country") as string,
+      userId: userId as string,
     };
-    console.log(destination);
+    console.log("destination", destination);
     createNewTourOnSubmit(destination);
   };
 
@@ -100,6 +104,7 @@ function NewTour() {
             name="country"
             required
           />
+
           <button className="btn btn-primary join-item" type="submit">
             Generate tour
           </button>

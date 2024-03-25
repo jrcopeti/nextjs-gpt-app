@@ -17,6 +17,7 @@ export interface ToursListProps {
   description: string;
   image: string | null;
   stops: JsonValue[];
+  userId: string;
 }
 
 function TourInfo({ tour }: { tour: ToursListProps }) {

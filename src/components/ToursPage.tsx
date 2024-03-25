@@ -5,14 +5,22 @@ import { useQuery } from "@tanstack/react-query";
 import ToursList from "./ToursList";
 import { ToursListProps } from "./TourInfo";
 import { useState } from "react";
+import { useAuth } from "@clerk/nextjs";
+
+
 
 function ToursPage() {
+
   const [searchTerm, setSearchTerm] = useState("");
+  const {userId} = useAuth();
+
+
+
   const { data, isPending } = useQuery({
     queryKey: ["tours", searchTerm],
-    queryFn: () => getAllTours(searchTerm),
+    queryFn: () => getAllTours(userId, searchTerm),
   });
-  console.log("data", data);
+
   return (
     <>
       <form className="mb-12 max-w-lg">

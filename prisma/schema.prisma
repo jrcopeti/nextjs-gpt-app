@@ -22,7 +22,8 @@ model Tour {
   description String @db.Text
   image String? @db.Text
   stops Json
-  @@unique([city, country])
+  userId String
+  @@unique([userId, city, country])
 }
 
 model Token {

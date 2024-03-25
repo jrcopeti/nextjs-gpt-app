@@ -42,11 +42,13 @@ export const generateChatResponse = async (chatMessage: ChatMessage[]) => {
 interface QueryTourProps {
   city: string;
   country: string;
+  userId: string;
 }
 
 export const generateTourResponse = async ({
   city,
   country,
+  userId,
 }: QueryTourProps) => {
   if (typeof process.env.NEXT_PUBLIC_PROMPT === "undefined") {
     throw new Error("NEXT_PUBLIC_PROMPT environment variable is undefined.");
@@ -86,10 +88,15 @@ export const generateTourResponse = async ({
   }
 };
 
-export const getExistingTour = async ({ city, country }: QueryTourProps) => {
+export const getExistingTour = async ({
+  userId,
+  city,
+  country,
+}: QueryTourProps) => {
   return prisma.tour.findUnique({
     where: {
-      city_country: {
+      userId_city_country: {
+        userId,
         city,
         country,
       },
@@ -103,25 +110,22 @@ export interface TourProps {
   title: string;
   description: string;
   stops: string[];
+  userId: string;
 }
 
 export const createNewTour = async (tour: TourProps) => {
   return prisma.tour.create({
-    data: tour,
+    data: {
+      ...tour,
+   
+    },
   });
 };
 
-export const getAllTours = async (searchTerm: string) => {
-  if (!searchTerm) {
-    const allTours = await prisma.tour.findMany({
-      orderBy: {
-        city: "asc",
-      },
-    });
-    return allTours;
-  }
-  const allTours = await prisma.tour.findMany({
-    where: {
+export const getAllTours = async (userId: string, searchTerm: string) => {
+  const whereClause = {
+    userId, // Add this line to include the userId in the query
+    ...(searchTerm && {
       OR: [
         {
           city: {
@@ -134,11 +138,16 @@ export const getAllTours = async (searchTerm: string) => {
           },
         },
       ],
-    },
+    }),
+  };
+
+  const allTours = await prisma.tour.findMany({
+    where: whereClause,
     orderBy: {
       city: "asc",
     },
   });
+
   return allTours;
 };
 
