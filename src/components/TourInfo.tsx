@@ -1,29 +1,8 @@
-type JsonValue =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: JsonValue }
-  | object
-  | JsonValue[];
+import { TourProps } from "@/utils/types";
 
-export interface ToursListProps {
-  id: string;
-  city: string;
-  country: string;
-  createdAt: Date;
-  updatedAt: Date;
-  title: string;
-  description: string;
-  image: string | null;
-  stops: JsonValue[];
-  userId: string;
-}
-
-function TourInfo({ tour }: { tour: ToursListProps }) {
-  console.log("tour in Tour Info Component", tour);
+function TourInfo({ tour }: { tour: TourProps }) {
   const { title, description, stops } = tour;
-  console.log(stops);
+
   return (
     <div className="max-w-2xl">
       <h1 className="mb-4 text-4xl font-semibold">{title}</h1>

@@ -1,24 +1,22 @@
 "use client";
 
-import { getAllTours } from "@/utils/actions";
-import { useQuery } from "@tanstack/react-query";
-import ToursList from "./ToursList";
-import { ToursListProps } from "./TourInfo";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@clerk/nextjs";
 
+import ToursList from "./ToursList";
 
+import { getAllTours } from "@/utils/actions";
+import { TourProps } from "@/utils/types";
 
 function ToursPage() {
-
   const [searchTerm, setSearchTerm] = useState("");
-  const {userId} = useAuth();
-
-
+  const { userId } = useAuth();
 
   const { data, isPending } = useQuery({
     queryKey: ["tours", searchTerm],
-    queryFn: () => getAllTours(userId, searchTerm),
+    queryFn: () =>
+      userId ? getAllTours(userId, searchTerm) : Promise.resolve(null),
   });
 
   return (
@@ -46,7 +44,7 @@ function ToursPage() {
       {isPending ? (
         <span className="loading"></span>
       ) : (
-        <ToursList tours={data as ToursListProps[] || []} />
+        <ToursList tours={(data as TourProps[]) || []} />
       )}
     </>
   );
