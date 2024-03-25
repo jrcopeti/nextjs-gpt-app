@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ToursListProps } from "./ToursList";
+import { ToursListProps } from "./TourInfo";
 
 function ToursCard({ tour }: { tour: ToursListProps }) {
   const { id, city, country, title } = tour;

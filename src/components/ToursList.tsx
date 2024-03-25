@@ -1,17 +1,5 @@
 import ToursCard from "./ToursCard";
-type JsonValue = string | number | boolean | null | { [key: string]: JsonValue } | JsonValue[];
-
-export interface ToursListProps {
-  id: string;
-  city: string;
-  country: string;
-  createdAt: Date;
-  updatedAt: Date;
-  title: string;
-  description: string;
-  image: string | null;
-  stops: JsonValue
-}
+import { ToursListProps } from "./TourInfo";
 
 function ToursList({ tours }: { tours: ToursListProps[] }) {
   if (tours.length === 0) return <h4 className="text-lg">No tours found...</h4>;

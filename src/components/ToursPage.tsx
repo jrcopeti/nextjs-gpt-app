@@ -2,7 +2,8 @@
 
 import { getAllTours } from "@/utils/actions";
 import { useQuery } from "@tanstack/react-query";
-import ToursList, { ToursListProps } from "./ToursList";
+import ToursList from "./ToursList";
+import { ToursListProps } from "./TourInfo";
 import { useState } from "react";
 
 function ToursPage() {
