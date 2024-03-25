@@ -21,7 +21,7 @@ function ToursPage() {
 
   return (
     <>
-      <form className="mb-12 max-w-lg">
+      <form className="mb-12 mt-5 max-w-lg mr-10">
         <div className="join w-full">
           <input
             type="text"
@@ -32,12 +32,16 @@ function ToursPage() {
             required
           />
           <button
-            className="btn btn-primary join-item "
+            className="btn btn-secondary join-item "
             type="button"
             disabled={isPending}
             onClick={(e) => setSearchTerm("")}
           >
-            {isPending ? "Please wait..." : "Reset"}
+            {isPending ? (
+              <div className="t loading loading-sm text-primary "></div>
+            ) : (
+              "Reset"
+            )}
           </button>
         </div>
       </form>

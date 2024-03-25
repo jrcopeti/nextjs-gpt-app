@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "@clerk/nextjs";
 
 import { cityCountryInput } from "@/utils/types";
+import { FaSuitcase } from "react-icons/fa6";
 
 function NewTour() {
   const queryClient = useQueryClient();
@@ -26,7 +27,6 @@ function NewTour() {
   } = useMutation({
     mutationFn: async (cityCountry: cityCountryInput) => {
       const existingTour = await getExistingTour(cityCountry);
-      console.log("existingTour", existingTour);
 
       if (existingTour) {
         return existingTour;
@@ -84,7 +84,13 @@ function NewTour() {
         onSubmit={handleSubmit}
         className="flex max-w-2xl flex-col items-center"
       >
-        <h2 className="mb-4 text-xl">Select your destination</h2>
+        <h2 className="mb-4 flex items-center gap-3 text-xl">
+          {" "}
+          <span>
+            <FaSuitcase />
+          </span>{" "}
+          Select your destination
+        </h2>
         <div className="join join-vertical w-10/12 lg:join-horizontal lg:w-full">
           <input
             type="text"
@@ -103,9 +109,13 @@ function NewTour() {
             disabled={isPending}
           />
 
-          <button className="btn btn-primary join-item" type="submit">
+          <button
+            className="btn btn-primary join-item"
+            type="submit"
+            disabled={isPending}
+          >
             {isPending ? (
-              <span className="loading loading-sm"> </span>
+              <span className="loading loading-sm text-primary"> </span>
             ) : (
               "Generate Tour"
             )}
