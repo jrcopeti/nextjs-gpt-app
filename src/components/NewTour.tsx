@@ -1,6 +1,5 @@
 "use client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import TourInfo from "./TourInfo";
 import {
   createNewTour,
   fetchUserTokensbyId,
@@ -8,13 +7,13 @@ import {
   getExistingTour,
   subtractedTokens,
 } from "@/utils/actions";
+
+import TourInfo from "./TourInfo";
+
 import toast from "react-hot-toast";
 import { useAuth } from "@clerk/nextjs";
 
-interface Destination {
-  city: string;
-  country: string;
-}
+import { cityCountryInput } from "@/utils/types";
 
 function NewTour() {
   const queryClient = useQueryClient();
@@ -25,9 +24,10 @@ function NewTour() {
     isPending,
     data: tour,
   } = useMutation({
-    mutationFn: async (destination: Destination) => {
-      const existingTour = await getExistingTour(destination);
+    mutationFn: async (cityCountry: cityCountryInput) => {
+      const existingTour = await getExistingTour(cityCountry);
       console.log("existingTour", existingTour);
+
       if (existingTour) {
         return existingTour;
       }
@@ -37,61 +37,62 @@ function NewTour() {
       }
 
       const currentTokens = await fetchUserTokensbyId(userId);
-      console.log("currentTokens", currentTokens);
 
       if (!currentTokens) {
-        toast.error("Could not retrieve token balance.");
-        return;
+        throw new Error("Could not load tokens.");
       }
 
       if (currentTokens.tokens < 300) {
-        toast.error("Token balance is too low to create a new tour.");
-        return;
+        throw new Error("Token balance is too low to create a new tour.");
       }
 
-      const newTour = await generateTourResponse(destination);
-      console.log("newTour", newTour);
-
+      const newTour = await generateTourResponse(cityCountry);
       if (!newTour) {
-        toast.error("No matching tours found");
-        return null;
+        throw new Error("No matching tours. Please try again.");
       }
 
-      const response = await createNewTour(newTour.tour);
-      console.log("response", response);
+      const response = await createNewTour({ ...newTour.tour, userId });
+
       queryClient.invalidateQueries({ queryKey: ["tours"] });
       const updatedTokens = await subtractedTokens(userId, newTour.tokens ?? 0);
+
       toast.success(`You have ${updatedTokens} tokens left.`);
+
       return newTour.tour;
+    },
+    onError: (error) => {
+      toast.error(error.message);
     },
   });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const destination: Destination = {
+
+    const cityCountryInput: cityCountryInput = {
       city: formData.get("city") as string,
       country: formData.get("country") as string,
+      userId: userId as string,
     };
-    console.log(destination);
-    createNewTourOnSubmit(destination);
-  };
 
-  if (isPending) {
-    return <span className="loading loading-lg"></span>;
-  }
+    createNewTourOnSubmit(cityCountryInput);
+  };
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="max-w-2xl">
-        <h2 className="mb-4">Select your dream destination</h2>
-        <div className="join w-full">
+      <form
+        onSubmit={handleSubmit}
+        className="flex max-w-2xl flex-col items-center"
+      >
+        <h2 className="mb-4 text-xl">Select your destination</h2>
+        <div className="join join-vertical w-10/12 lg:join-horizontal lg:w-full">
           <input
             type="text"
             className="input join-item input-bordered w-full"
             placeholder="City"
             name="city"
             required
+            disabled={isPending}
           />
           <input
             type="text"
@@ -99,13 +100,23 @@ function NewTour() {
             placeholder="Country"
             name="country"
             required
+            disabled={isPending}
           />
+
           <button className="btn btn-primary join-item" type="submit">
-            Generate tour
+            {isPending ? (
+              <span className="loading loading-sm"> </span>
+            ) : (
+              "Generate Tour"
+            )}
           </button>
         </div>
       </form>
-      <div className="mt-16">{tour ? <TourInfo tour={tour} /> : null}</div>
+      {tour && (
+        <div className="mt-16 ">
+          <TourInfo tour={tour} />
+        </div>
+      )}
     </>
   );
 }

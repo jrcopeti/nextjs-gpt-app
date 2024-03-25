@@ -33,19 +33,17 @@ function Chat() {
       const currentTokens = await fetchUserTokensbyId(userId);
 
       if (!currentTokens) {
-        toast.error("Could not retrieve token balance.");
-        return;
+        throw new Error("Could not retrieve token balance.");
       }
 
       if (currentTokens.tokens < 100) {
-        toast.error("Token balance too low....");
-        return;
+        throw new Error("Token balance is too low to generate a response.");
       }
 
       const response = await generateChatResponse([...messages, query]);
 
       if (!response) {
-        toast.error("Something went wrong...");
+        throw new Error("Failed to generate response. Please try again.");
         return;
       }
       setMessages((prev) => [...prev, response.message]);
@@ -54,6 +52,9 @@ function Chat() {
         response.tokens ?? 0,
       );
       toast.success(`${updatedTokens} tokens remaining...`);
+    },
+    onError: (error) => {
+      toast.error(error.message);
     },
   });
 

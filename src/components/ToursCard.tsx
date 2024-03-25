@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { ToursListProps } from "./TourInfo";
+import { TourProps } from "@/utils/types";
 
-function ToursCard({ tour }: { tour: ToursListProps }) {
+function ToursCard({ tour }: { tour: TourProps }) {
   const { id, city, country, title } = tour;
   return (
     <Link
@@ -10,7 +10,7 @@ function ToursCard({ tour }: { tour: ToursListProps }) {
     >
       <div className="card-body items-center text-center">
         <h2 className="card-title text-center capitalize">
-          {city}, {country}
+        &#187; {city}, {country}
         </h2>
       </div>
     </Link>

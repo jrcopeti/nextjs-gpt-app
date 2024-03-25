@@ -3,17 +3,13 @@
 import OpenAI from "openai";
 import prisma from "./utils";
 import { revalidatePath } from "next/cache";
-
-interface ChatMessage {
-  role: "user" | "assistant" | "system" | "function";
-  content: string | null;
-}
+import { QueryTourTypes, ChatMessageTypes, TourProps } from "@/utils/types";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export const generateChatResponse = async (chatMessage: ChatMessage[]) => {
+export const generateChatResponse = async (chatMessage: ChatMessageTypes[]) => {
   try {
     const response = await openai.chat.completions.create({
       messages: [
@@ -27,36 +23,30 @@ export const generateChatResponse = async (chatMessage: ChatMessage[]) => {
       temperature: 0,
       max_tokens: 200,
     });
-    console.log(response.choices[0].message);
-    console.log(response);
 
     return {
       message: response.choices[0].message,
       tokens: response.usage?.total_tokens,
     };
   } catch (error) {
+    console.log(error);
     return null;
   }
 };
 
-interface QueryTourProps {
-  city: string;
-  country: string;
-}
-
 export const generateTourResponse = async ({
   city,
   country,
-}: QueryTourProps) => {
+}: QueryTourTypes) => {
   if (typeof process.env.NEXT_PUBLIC_PROMPT === "undefined") {
-    throw new Error("NEXT_PUBLIC_PROMPT environment variable is undefined.");
+    throw new Error("Prompt is undefined");
   }
+
   const prompt = process.env.NEXT_PUBLIC_PROMPT.replace(
     /{{city}}/g,
     city,
   ).replace(/{{country}}/g, country);
 
-  console.log("prompt", prompt);
   try {
     const response = await openai.chat.completions.create({
       messages: [
@@ -66,30 +56,32 @@ export const generateTourResponse = async ({
       model: "gpt-3.5-turbo",
       temperature: 0,
     });
-    console.log("response", response.choices[0].message.content);
 
-    if (response.choices[0].message.content === null) {
-      return null;
+    if (!response.choices[0].message.content) {
+      throw new Error("Failed to generate tour response. Please try again.");
     }
 
     const tourData = JSON.parse(response.choices[0].message.content);
 
     if (!tourData.tour) {
-      return null;
+      throw new Error("Failed to generate tour response. Please try again.");
     }
 
-    console.log("tourDataaaaaaaaa", tourData);
     return { tour: tourData.tour, tokens: response.usage?.total_tokens };
   } catch (error) {
-    console.log(error);
     return null;
   }
 };
 
-export const getExistingTour = async ({ city, country }: QueryTourProps) => {
+export const getExistingTour = async ({
+  userId,
+  city,
+  country,
+}: QueryTourTypes) => {
   return prisma.tour.findUnique({
     where: {
-      city_country: {
+      userId_city_country: {
+        userId,
         city,
         country,
       },
@@ -97,31 +89,16 @@ export const getExistingTour = async ({ city, country }: QueryTourProps) => {
   });
 };
 
-export interface TourProps {
-  city: string;
-  country: string;
-  title: string;
-  description: string;
-  stops: string[];
-}
-
 export const createNewTour = async (tour: TourProps) => {
   return prisma.tour.create({
     data: tour,
   });
 };
 
-export const getAllTours = async (searchTerm: string) => {
-  if (!searchTerm) {
-    const allTours = await prisma.tour.findMany({
-      orderBy: {
-        city: "asc",
-      },
-    });
-    return allTours;
-  }
-  const allTours = await prisma.tour.findMany({
-    where: {
+export const getAllTours = async (userId: string, searchTerm: string) => {
+  const whereClause = {
+    userId, // Add this line to include the userId in the query
+    ...(searchTerm && {
       OR: [
         {
           city: {
@@ -134,11 +111,16 @@ export const getAllTours = async (searchTerm: string) => {
           },
         },
       ],
-    },
+    }),
+  };
+
+  const allTours = await prisma.tour.findMany({
+    where: whereClause,
     orderBy: {
       city: "asc",
     },
   });
+
   return allTours;
 };
 
@@ -150,7 +132,8 @@ export const getSingleTour = async (id: string) => {
   });
 };
 
-export const generateTourImage = async ({ city, country }: QueryTourProps) => {
+// Image actions
+export const generateTourImage = async ({ city, country }: QueryTourTypes) => {
   try {
     const tourImage = await openai.images.generate({
       prompt: `A scenic image of ${city}, ${country}`,
@@ -164,6 +147,7 @@ export const generateTourImage = async ({ city, country }: QueryTourProps) => {
   }
 };
 
+// Tokens actions
 export const fetchUserTokensbyId = async (
   userId: string,
 ): Promise<{ tokens: number } | null> => {
@@ -172,12 +156,10 @@ export const fetchUserTokensbyId = async (
       userId,
     },
   });
-  console.log("result fetch", result);
 
   if (!result) {
     return null;
   }
-
   return { tokens: result.tokens };
 };
 
@@ -189,7 +171,7 @@ export const generateUserTokensForId = async (
       userId,
     },
   });
-  console.log("result generate", result);
+
   return { tokens: result.tokens ?? 0 };
 };
 
