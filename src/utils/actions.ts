@@ -2,6 +2,7 @@
 
 import OpenAI from "openai";
 import prisma from "./utils";
+import { revalidatePath } from "next/cache";
 
 interface ChatMessage {
   role: "user" | "assistant" | "system" | "function";
@@ -24,6 +25,7 @@ export const generateChatResponse = async (chatMessage: ChatMessage[]) => {
       ],
       model: "gpt-3.5-turbo",
       temperature: 0,
+      max_tokens: 200,
     });
     console.log(response.choices[0].message);
     console.log(response);
@@ -73,7 +75,8 @@ export const generateTourResponse = async ({
     }
 
     console.log("tourDataaaaaaaaa", tourData);
-    return tourData.tour;
+    return {tour: tourData.tour, tokens: response.usage.total_tokens}
+    
   } catch (error) {
     console.log(error);
     return null;
@@ -156,4 +159,57 @@ export const generateTourImage = async ({ city, country }: QueryTourProps) => {
     console.log(error);
     return null;
   }
+};
+
+export const fetchUserTokensbyId = async (
+  userId: string,
+): Promise<{ tokens: number } | null> => {
+  const result = await prisma.token.findUnique({
+    where: {
+      userId,
+    },
+  });
+  console.log("result fetch", result);
+
+  if (!result) {
+    return null;
+  }
+
+  return { tokens: result.tokens };
+};
+
+export const generateUserTokensForId = async (
+  userId: string,
+): Promise<{ tokens: number }> => {
+  const result = await prisma.token.create({
+    data: {
+      userId,
+    },
+  });
+  console.log("result generate", result);
+  return { tokens: result.tokens ?? 0 };
+};
+
+export const fetchOrGenerateTokensForUser = async (userId: string) => {
+  const result = await fetchUserTokensbyId(userId);
+  if (result) {
+    return result.tokens;
+  } else {
+    return await generateUserTokensForId(userId);
+  }
+};
+
+export const subtractedTokens = async (userId: string, tokens: number) => {
+  const result = await prisma.token.update({
+    where: {
+      userId,
+    },
+    data: {
+      tokens: {
+        decrement: tokens,
+      },
+    },
+  });
+  revalidatePath('/profile')
+  return result.tokens;
 };

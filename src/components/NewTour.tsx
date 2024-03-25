@@ -3,10 +3,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import TourInfo from "./TourInfo";
 import {
   createNewTour,
+  fetchUserTokensbyId,
   generateTourResponse,
   getExistingTour,
+  subtractedTokens,
 } from "@/utils/actions";
 import toast from "react-hot-toast";
+import { useAuth } from "@clerk/nextjs";
 
 interface Destination {
   city: string;
@@ -15,6 +18,7 @@ interface Destination {
 
 function NewTour() {
   const queryClient = useQueryClient();
+  const { userId } = useAuth();
 
   const {
     mutate: createNewTourOnSubmit,
@@ -28,18 +32,37 @@ function NewTour() {
         return existingTour;
       }
 
-      const newTour = await generateTourResponse(destination);
-      console.log("newTour", newTour)
-
-      if (newTour) {
-        const response = await createNewTour(newTour);
-        console.log("response", response);
-        queryClient.invalidateQueries({ queryKey: ["tours"] });
-        return newTour
+      if (!userId) {
+        return <div>Not signed in</div>;
       }
 
-      toast.error("No matching tours found");
-      return null;
+      const currentTokens = await fetchUserTokensbyId(userId);
+      console.log("currentTokens", currentTokens);
+
+      if (!currentTokens) {
+        toast.error("Could not retrieve token balance.");
+        return;
+      }
+
+      if (currentTokens.tokens < 300) {
+        toast.error("Token balance is too low to create a new tour.");
+        return;
+      }
+
+      const newTour = await generateTourResponse(destination);
+      console.log("newTour", newTour);
+
+      if (!newTour) {
+        toast.error("No matching tours found");
+        return null;
+      }
+
+      const response = await createNewTour(newTour.tour);
+      console.log("response", response);
+      queryClient.invalidateQueries({ queryKey: ["tours"] });
+      const updatedTokens = await subtractedTokens(userId, newTour.tokens);
+      toast.success(`You have ${updatedTokens} tokens left.`);
+      return newTour.tour;
     },
   });
 
