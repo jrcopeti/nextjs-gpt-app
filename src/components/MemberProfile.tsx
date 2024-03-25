@@ -3,9 +3,12 @@ import { UserButton, auth, currentUser } from "@clerk/nextjs";
 async function MemberProfile() {
   const user = await currentUser();
   // const { userId } = auth();
+  if (user === null) {
+    return <div>Not signed in</div>;
+  }
 
   return (
-    <div className="px-4 flex items-center gap-2 text-secondary">
+    <div className="px-4 flex items-center gap-2 text-primary">
       <UserButton afterSignOutUrl="/" />
       <p>
         {user.emailAddresses[0].emailAddress}
