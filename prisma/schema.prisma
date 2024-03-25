@@ -24,3 +24,8 @@ model Tour {
   stops Json
   @@unique([city, country])
 }
+
+model Token {
+  userId String @id
+  tokens Int @default(2000)
+}

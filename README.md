@@ -1913,6 +1913,7 @@ const Chat = () => {
     mutationFn: async (query) => {
       const currentTokens = await fetchUserTokensById(userId);
 
+
       if (currentTokens < 100) {
         toast.error('Token balance too low....');
         return;
