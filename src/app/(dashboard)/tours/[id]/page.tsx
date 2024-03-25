@@ -1,5 +1,5 @@
 import TourInfo from "@/components/TourInfo";
-import { ToursListProps } from "@/components/ToursList";
+import { ToursListProps } from "@/components/TourInfo";
 import { generateTourImage, getSingleTour } from "@/utils/actions";
 import Image from "next/image";
 import Link from "next/link";
