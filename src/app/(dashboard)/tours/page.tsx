@@ -9,10 +9,10 @@ import {
 async function AllToursPage() {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: ["tours", ""],
-    queryFn: () => getAllTours(),
-  });
+  // await queryClient.prefetchQuery({
+  //   queryKey: ["tours", ""],
+  //   queryFn: () => getAllTours(),
+  // });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
