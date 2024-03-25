@@ -4,27 +4,32 @@ import { BsMoonFill, BsSunFill } from "react-icons/bs";
 import { useState } from "react";
 
 const themes = {
-  night: "night",
-  fantasy: "fantasy",
+  dark: "sunset",
+  light: "garden",
 };
 
 function ThemeToggle() {
-  const [theme, setTheme] = useState(themes.night);
+  const [theme, setTheme] = useState(themes.dark);
 
   const handleToggleTheme = () => {
-    const newTheme = theme === themes.night ? themes.fantasy : themes.night;
+    const newTheme = theme === themes.dark ? themes.light : themes.dark;
     document.documentElement.setAttribute("data-theme", newTheme);
     setTheme(newTheme);
   };
 
   return (
-    <button onClick={handleToggleTheme} className="btn btn-sm btn-outline ">
-      {theme === "night" ? (
-        <BsMoonFill className="h-4 w-4" />
-      ) : (
-        <BsSunFill className="h-4 w-4" />
-      )}
-    </button>
+    <div>
+      <button
+        onClick={handleToggleTheme}
+        className="btn btn-secondary btn-outline btn-sm ml-5 my-2"
+      >
+        {theme === "dark" ? (
+          <BsMoonFill className="h-4 w-4" />
+        ) : (
+          <BsSunFill className="h-4 w-4" />
+        )}
+      </button>
+    </div>
   );
 }
 

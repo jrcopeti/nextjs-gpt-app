@@ -78,7 +78,7 @@ function Chat() {
             role === "user" ? (
               content
             ) : (
-              <TypewriterEffect text={content} delay={40} />
+              <TypewriterEffect text={content} delay={30} />
             );
 
           return (
@@ -86,7 +86,7 @@ function Chat() {
               key={index}
               className={`${background} -mx-8 flex border-b border-base-300 px-8 py-6 text-lg leading-loose`}
             >
-              <span className="mr-4 text-xl text-primary">{avatar}</span>
+              <span className="mr-4 text-xl text-accent">{avatar}</span>
               <div className="max-w-3xl">
                 <span>{displayContent}</span>
               </div>
@@ -110,7 +110,7 @@ function Chat() {
             className="btn btn-primary join-item text-xl "
           >
             {isPending ? (
-              <span className="loading loading-spinner loading-xs"></span>
+              <span className="loading loading-spinner loading-xs text-primary"></span>
             ) : (
               <span>
                 <FaArrowUpFromBracket />
