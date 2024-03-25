@@ -1,6 +1,10 @@
 "use client";
 
-import { generateChatResponse } from "@/utils/actions";
+import {
+  fetchUserTokensbyId,
+  generateChatResponse,
+  subtractedTokens,
+} from "@/utils/actions";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -8,6 +12,7 @@ import { FaArrowUpFromBracket } from "react-icons/fa6";
 import { IoPerson } from "react-icons/io5";
 import { RiRobot2Line } from "react-icons/ri";
 import TypewriterEffect from "./TypewriterEffect";
+import { useAuth } from "@clerk/nextjs";
 
 interface QueryProps {
   role: "user" | "assistant" | "system" | "function";
@@ -17,17 +22,38 @@ interface QueryProps {
 function Chat() {
   const [inputText, setInputText] = useState<string>("");
   const [messages, setMessages] = useState<QueryProps[]>([]);
+  const { userId } = useAuth();
 
   const { mutate: createQuery, isPending } = useMutation({
-    mutationFn: (query: QueryProps) =>
-      generateChatResponse([...messages, query]),
-    onSuccess: (data) => {
-      if (!data) {
-        toast.error("Failed to generate response");
+    mutationFn: async (query: QueryProps) => {
+      if (!userId) {
+        return <div>Not signed in</div>;
+      }
+
+      const currentTokens = await fetchUserTokensbyId(userId);
+
+      if (!currentTokens) {
+        toast.error("Could not retrieve token balance.");
         return;
       }
-      console.log(data);
-      setMessages((prev) => [...prev, data]);
+
+      if (currentTokens.tokens < 100) {
+        toast.error("Token balance too low....");
+        return;
+      }
+
+      const response = await generateChatResponse([...messages, query]);
+
+      if (!response) {
+        toast.error("Something went wrong...");
+        return;
+      }
+      setMessages((prev) => [...prev, response.message]);
+      const updatedTokens = await subtractedTokens(
+        userId,
+        response.tokens ?? 0,
+      );
+      toast.success(`${updatedTokens} tokens remaining...`);
     },
   });
 

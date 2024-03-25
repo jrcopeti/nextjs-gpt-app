@@ -29,7 +29,11 @@ export const generateChatResponse = async (chatMessage: ChatMessage[]) => {
     });
     console.log(response.choices[0].message);
     console.log(response);
-    return response.choices[0].message;
+
+    return {
+      message: response.choices[0].message,
+      tokens: response.usage?.total_tokens,
+    };
   } catch (error) {
     return null;
   }
@@ -75,8 +79,7 @@ export const generateTourResponse = async ({
     }
 
     console.log("tourDataaaaaaaaa", tourData);
-    return {tour: tourData.tour, tokens: response.usage.total_tokens}
-    
+    return { tour: tourData.tour, tokens: response.usage?.total_tokens };
   } catch (error) {
     console.log(error);
     return null;
@@ -210,6 +213,6 @@ export const subtractedTokens = async (userId: string, tokens: number) => {
       },
     },
   });
-  revalidatePath('/profile')
+  revalidatePath("/profile");
   return result.tokens;
 };

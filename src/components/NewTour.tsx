@@ -60,7 +60,7 @@ function NewTour() {
       const response = await createNewTour(newTour.tour);
       console.log("response", response);
       queryClient.invalidateQueries({ queryKey: ["tours"] });
-      const updatedTokens = await subtractedTokens(userId, newTour.tokens);
+      const updatedTokens = await subtractedTokens(userId, newTour.tokens ?? 0);
       toast.success(`You have ${updatedTokens} tokens left.`);
       return newTour.tour;
     },

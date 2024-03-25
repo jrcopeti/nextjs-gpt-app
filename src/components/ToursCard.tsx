@@ -6,7 +6,7 @@ function ToursCard({ tour }: { tour: ToursListProps }) {
   return (
     <Link
       href={`/tours/${id}`}
-      className="card-compact card rounded-xl bg-base-200"
+      className="card card-compact rounded-xl bg-base-200"
     >
       <div className="card-body items-center text-center">
         <h2 className="card-title text-center capitalize">
