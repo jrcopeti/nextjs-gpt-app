@@ -10,7 +10,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
           htmlFor="my-drawer-2"
           className="drawer-button lg:hidden fixed top-6 right-6"
         >
-          <FaBarsStaggered className="w-8 h-8 text-primary" />
+          <FaBarsStaggered className="w-8 h-8 text-secondary z-40" />
         </label>
         <div className="bg-base-100 px-8 py-12 min-h-screen">{children}</div>
       </div>
