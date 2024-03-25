@@ -1,4 +1,5 @@
 import ToursCard from "./ToursCard";
+type JsonValue = string | number | boolean | null | { [key: string]: JsonValue } | JsonValue[];
 
 export interface ToursListProps {
   id: string;
@@ -9,7 +10,7 @@ export interface ToursListProps {
   title: string;
   description: string;
   image: string | null;
-  stops: string[]
+  stops: JsonValue
 }
 
 function ToursList({ tours }: { tours: ToursListProps[] }) {

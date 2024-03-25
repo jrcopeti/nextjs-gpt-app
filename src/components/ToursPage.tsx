@@ -37,7 +37,7 @@ function ToursPage() {
       {isPending ? (
         <span className="loading"></span>
       ) : (
-        <ToursList tours={(data as ToursListProps[]) || []} />
+        <ToursList tours={data as ToursListProps[] || []} />
       )}
     </>
   );
