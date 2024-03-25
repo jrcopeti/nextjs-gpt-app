@@ -12,9 +12,9 @@ async function MemberProfile() {
   await fetchOrGenerateTokensForUser(userId);
 
   return (
-    <div className="flex items-center gap-2 px-4 text-primary">
+    <div className="flex items-center gap-2 px-4">
       <UserButton afterSignOutUrl="/" />
-      <p>{user.emailAddresses[0].emailAddress}</p>
+      <p className='text-neutral-content text-sm'>{user.emailAddresses[0].emailAddress}</p>
     </div>
   );
 }
