@@ -7,8 +7,9 @@ import Link from "next/link";
 import axios from "axios";
 import { redirect } from "next/navigation";
 import { TourProps } from "@/utils/types";
+import { IoArrowBack } from "react-icons/io5";
 
-const url = `https://api.unsplash.com/search/photos?client_id=${process.env.UNSPLASH_API_KEY}&query=`;
+const url = `https://api.unsplash.com/search/photos?client_id=${process.env.NEXT_PUBLIC_UNSPLASH_API_KEY}&query=`;
 
 async function SingleTourPage({ params }: { params: { id: string } }) {
   const tour = (await getSingleTour(params.id)) as TourProps;
@@ -26,8 +27,8 @@ async function SingleTourPage({ params }: { params: { id: string } }) {
 
   return (
     <div>
-      <Link href="/tours" className="btn btn-primary btn-sm mb-12 ">
-      &#8678; Back
+      <Link href="/tours" className="btn btn-secondary bg-gradient-to-r from-primary to-secondary hover:text-base-content btn-sm mb-12 ">
+        <IoArrowBack size={20} />
       </Link>
       {tourImage && (
         <div>

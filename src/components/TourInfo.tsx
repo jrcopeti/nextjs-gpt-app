@@ -1,4 +1,5 @@
 import { TourProps } from "@/utils/types";
+import { IoArrowBack } from "react-icons/io5";
 
 function TourInfo({ tour }: { tour: TourProps }) {
   const { title, description, stops } = tour;
@@ -10,7 +11,7 @@ function TourInfo({ tour }: { tour: TourProps }) {
       <ul className="">
         {stops?.map((stop, index) => {
           return (
-            <li key={index} className="mb-4 rounded-xl bg-base-200 p-4">
+            <li key={index} className="mb-4 rounded-xl bg-primary-content p-4">
               <p className="text">
                 {index + 1}.{" "}
                 {typeof stop === "object" ? JSON.stringify(stop) : stop}

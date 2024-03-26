@@ -1,6 +1,7 @@
 "use client";
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
+import { useState } from "react";
 
 const themes = {
   dark: "sunset",
@@ -8,10 +9,7 @@ const themes = {
 };
 
 function ThemeToggle() {
-  const [theme, setTheme] = useLocalStorageState(
-    window.matchMedia("(prefers-color-scheme: dark)").matches,
-    "theme",
-  );
+  const [theme, setTheme] = useState(themes.dark);
 
   const handleToggleTheme = () => {
     const newTheme = theme === themes.dark ? themes.light : themes.dark;
@@ -23,12 +21,12 @@ function ThemeToggle() {
     <div>
       <button
         onClick={handleToggleTheme}
-        className="btn btn-secondary btn-outline btn-sm ml-5 mt-2"
+        className="btn btn-outline btn-sm ml-5 mt-2 rounded-lg bg-base-100 "
       >
         {theme === "dark" ? (
-          <BsMoonFill className="h-4 w-4" />
+          <BsMoonFill className="h-5 w-5" />
         ) : (
-          <BsSunFill className="h-4 w-4" />
+          <BsSunFill className="h-5 w-5" />
         )}
       </button>
     </div>

@@ -5,9 +5,9 @@ import { BiMessageSquareError } from "react-icons/bi";
 function ToursList({ tours }: { tours: TourProps[] }) {
   if (tours.length === 0)
     return (
-      <h4 className="text-lg flex gap-4">
+      <h4 className="text-xl flex gap-4 items-center">
         {" "}
-        <span className='text-3xl'>
+        <span className='text-5xl'>
           <BiMessageSquareError />
         </span>
         No tours found{" "}
