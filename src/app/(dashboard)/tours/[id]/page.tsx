@@ -26,7 +26,7 @@ async function SingleTourPage({ params }: { params: { id: string } }) {
 
   return (
     <div>
-      <Link href="/tours" className="btn btn-secondary btn-sm text-neutral-content mb-12 ">
+      <Link href="/tours" className="btn btn-primary btn-sm mb-12 ">
       &#8678; Back
       </Link>
       {tourImage && (

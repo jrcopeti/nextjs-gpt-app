@@ -5,7 +5,7 @@ function TourInfo({ tour }: { tour: TourProps }) {
 
   return (
     <div className="max-w-2xl">
-      <h1 className="mb-4 text-4xl font-semibold">{title}</h1>
+      <h1 className="mb-4 text-4xl font-semibold p-4">{title}</h1>
       <p className="mb-6 leading-loose">{description}</p>
       <ul className="">
         {stops?.map((stop, index) => {

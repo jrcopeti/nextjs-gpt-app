@@ -8,6 +8,7 @@ import ToursList from "./ToursList";
 
 import { getAllTours } from "@/utils/actions";
 import { TourProps } from "@/utils/types";
+import { GrPowerReset } from "react-icons/gr";
 
 function ToursPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,32 +22,37 @@ function ToursPage() {
 
   return (
     <>
-      <form className="mb-12 mt-5 max-w-lg mr-10">
+      <form className="mb-12  max-w-lg">
         <div className="join w-full">
           <input
             type="text"
-            placeholder="enter city or country here..."
+            placeholder="Search for city or country"
             className="input join-item input-bordered w-full"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             required
           />
           <button
-            className="btn btn-secondary join-item "
+            className="btn btn-primary join-item "
             type="button"
             disabled={isPending}
             onClick={(e) => setSearchTerm("")}
           >
             {isPending ? (
-              <div className="t loading loading-sm text-primary "></div>
+              <div className="t loading loading-spinner loading-md text-primary "></div>
             ) : (
-              "Reset"
+              <div className="flex items-center gap-2">
+                <span className='text-xl'>
+                <GrPowerReset />
+                </span>
+                Reset
+              </div>
             )}
           </button>
         </div>
       </form>
       {isPending ? (
-        <span className="loading"></span>
+        <span className="loading loading-spinner loading-lg mx-4"></span>
       ) : (
         <ToursList tours={(data as TourProps[]) || []} />
       )}

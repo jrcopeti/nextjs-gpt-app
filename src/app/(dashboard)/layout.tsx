@@ -8,11 +8,11 @@ const layout = ({ children }: { children: React.ReactNode }) => {
       <div className="drawer-content">
         <label
           htmlFor="my-drawer-2"
-          className="drawer-button lg:hidden flex justify-end p-4"
+          className="drawer-button flex justify-end p-4 lg:hidden"
         >
-          <FaBarsStaggered className="w-8 h-8 text-secondary z-40" />
+          <FaBarsStaggered className="z-40 h-8 w-8 text-primary" />
         </label>
-        <div className="bg-base-100 px-8 py-12 min-h-dvh">{children}</div>
+        <div className="min-h-screen bg-base-100 px-8 py-12">{children}</div>
       </div>
       <div className="drawer-side">
         <label

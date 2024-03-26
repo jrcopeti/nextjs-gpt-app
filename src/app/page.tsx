@@ -10,14 +10,14 @@ function HomePage() {
         backgroundImage: `url(${url})`,
       }}
     >
-      <div className="hero-overlay bg-opacity-50"></div>
+      <div className="hero-overlay "></div>
       <div className="hero-content text-center text-neutral-content">
-        <div className="max-w-md bg-slate-100/20 p-6 rounded-sm">
-          <h1 className="mb-5 text-6xl font-bold">GPT App</h1>
-          <p className="mb-5 text-lg font-bold">
+        <div className="max-w-md p-6 rounded-lg shadow-lg">
+          <h1 className="mb-5 text-9xl font-bold">GPT App</h1>
+          <p className="mb-5 text-xl font-bold">
             Explore the power of AI in your next trip
           </p>
-          <Link href="/chat" className="btn btn-neutral">
+          <Link href="/chat" className=" btn btn-neutral text-3xl text-neutral-content rounded-lg">
             Get Started
           </Link>
         </div>
