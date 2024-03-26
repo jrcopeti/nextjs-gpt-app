@@ -110,12 +110,12 @@ function NewTour() {
           />
 
           <button
-            className="btn btn-primary join-item"
+            className="btn btn-secondary join-item"
             type="submit"
             disabled={isPending}
           >
             {isPending ? (
-              <span className="loading loading-sm text-primary"> </span>
+              <span className="loading loading-md text-secondary"> </span>
             ) : (
               "Generate Tour"
             )}

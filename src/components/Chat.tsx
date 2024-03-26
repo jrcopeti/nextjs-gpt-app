@@ -73,7 +73,7 @@ function Chat() {
       <div>
         {messages.map(({ role, content }, index) => {
           const avatar = role === "user" ? <IoPerson /> : <RiRobot2Line />;
-          const background = role === "user" ? "bg-base-200" : "bg-base-100";
+          const background = role === "user" ? "bg-base-100" : "bg-primary-content";
           const displayContent =
             role === "user" ? (
               content
@@ -84,9 +84,9 @@ function Chat() {
           return (
             <div
               key={index}
-              className={`${background} -mx-8 flex border-b border-base-300 px-8 py-6 text-lg leading-loose`}
+              className={`${background} -mx-8 flex border-b border-base-200 px-8 py-6 text-lg leading-loose`}
             >
-              <span className="mr-4 text-xl text-accent">{avatar}</span>
+              <span className="mr-4 text-xl text-primary">{avatar}</span>
               <div className="max-w-3xl">
                 <span>{displayContent}</span>
               </div>
@@ -107,10 +107,10 @@ function Chat() {
           />
           <button
             disabled={isPending}
-            className="btn btn-primary join-item text-xl "
+            className="btn btn-secondary join-item text-xl "
           >
             {isPending ? (
-              <span className="loading loading-spinner loading-xs text-primary"></span>
+              <span className="loading loading-spinner loading-md text-secondary"></span>
             ) : (
               <span>
                 <FaArrowUpFromBracket />

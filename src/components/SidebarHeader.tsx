@@ -1,15 +1,12 @@
-import { SiOpenaigym } from "react-icons/si";
-import ThemeToggle from "./ThemeToggle";
+import { SiAffinityphoto, SiBento, SiOpenaigym } from "react-icons/si";
 
 function SidebarHeader() {
   return (
     <>
-    <div className="flex items-center mb-4 gap-4 px-4">
-      <SiOpenaigym className="w-10 h-10 text-xl text-secondary" />
-      <h2 className="text-xl font-extrabold text-secondary">GPT App</h2>
-
-    </div>
-
+      <div className="mb-4 flex items-center gap-4 px-4">
+        <SiBento className="h-10 w-10 text-xl text-secondary" />
+        <h2 className="text-xl font-extrabold text-secondary">GPT App</h2>
+      </div>
     </>
   );
 }

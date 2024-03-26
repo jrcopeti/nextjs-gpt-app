@@ -26,19 +26,27 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
           toastOptions={{
             success: {
               duration: 5000,
+              iconTheme: {
+                primary: "#2E7D32",
+                secondary: "#FFFAEE",
+              }
             },
             error: {
               duration: 5000,
+              iconTheme: {
+                primary: "#a42323",
+                secondary: "#FFFAEE",
+              }
             },
             style: {
               fontSize: "16px",
               maxWidth: "500px",
               padding: "16px 24px",
               borderRadius: "10px",
-              backgroundColor: "#FFFAEE",
+              backgroundColor: "#e5ebec",
               color: "#713200",
             },
-          
+
           }}
         />
         {children}
