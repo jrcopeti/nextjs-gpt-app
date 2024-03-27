@@ -9,6 +9,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
     <>
       <div className="drawer lg:drawer-open">
         <input type="checkbox" id="my-drawer-2" className="drawer-toggle" />
+
         <div className="drawer-content">
           <label
             htmlFor="my-drawer-2"
@@ -16,6 +17,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
           >
             <FaBarsStaggered className="z-40 h-8 w-8 text-primary" />
           </label>
+
           <div className="min-h-screen bg-base-200 px-8 py-12">{children}</div>
         </div>
 
@@ -25,18 +27,19 @@ const layout = ({ children }: { children: React.ReactNode }) => {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
+
           <Sidebar />
         </div>
-      </div>
 
-      <div className="pointer-events-none absolute -left-[5rem] top-0 h-[56.625rem] w-[56.625rem] opacity-40 mix-blend-color-dodge">
-        <Image
-          className="absolute left-1 top-1/4 h-[88.5625rem] w-[20rem] max-w-[79.5625rem] -translate-x-1/2 -translate-y-1/2 lg:top-1/2 lg:w-[79.5625rem]"
-          src={gradient}
-          width={1417}
-          height={1417}
-          alt="Gradient"
-        />
+        <div className="pointer-events-none fixed -left-[5rem] top-0 h-[56.625rem] w-[56.625rem] opacity-40 mix-blend-color-dodge">
+          <Image
+            className="absolute left-1 top-1/4 h-[88.5625rem] w-[20rem] max-w-[79.5625rem] -translate-x-1/2 -translate-y-1/2 lg:top-1/2 lg:w-[79.5625rem]"
+            src={gradient}
+            width={1417}
+            height={1417}
+            alt="Gradient"
+          />
+        </div>
       </div>
     </>
   );
