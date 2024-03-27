@@ -1,5 +1,4 @@
 import { TourProps } from "@/utils/types";
-import { IoArrowBack } from "react-icons/io5";
 
 function TourInfo({ tour }: { tour: TourProps }) {
   const { title, description, stops } = tour;

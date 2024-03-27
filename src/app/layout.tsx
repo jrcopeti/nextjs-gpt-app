@@ -4,6 +4,7 @@ import { Commissioner } from "next/font/google";
 import "./globals.css";
 import Providers from "@/providers";
 import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 
 const inter = Inter({ subsets: ["latin"] });
 const commissioner = Commissioner({ subsets: ["latin"] });
@@ -20,7 +21,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
       <html lang="en">
         <body className={commissioner.className}>
           <Providers>{children}</Providers>

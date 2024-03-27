@@ -1,7 +1,8 @@
-import type { StaticImageData } from "next/image";
+import { HeroProps } from "@/utils/types";
 import Image from "next/image";
 import Link from "next/link";
 import grid from "/public/grid.png";
+
 
 interface HeroProps {
   imgData: StaticImageData;
@@ -10,9 +11,9 @@ interface HeroProps {
   blurDataUrl: string;
   subtitle: string;
   linkText: string;
-}
 
-export default function Hero(props: HeroProps) {
+function Hero(props: HeroProps) {
+
   return (
     <div className="relative h-screen">
       <div className="absolute inset-0 -z-10">
@@ -21,23 +22,18 @@ export default function Hero(props: HeroProps) {
           alt={props.imgAlt}
           fill
           className="object-cover"
-          blurDataURL={props.blurDataUrl}
+          blurDataURL={base64}
           placeholder="blur"
         />
 
         <div className="absolute inset-0 ">
-          <Image
-            src={grid}
-            alt="Grid"
-            fill
-            className="object-cover opacity-80"
-          />
+          <Image src={grid} alt="Grid" fill className="object-cover " />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-slate-700/30"></div>
       </div>
 
       <section className="z-0 flex flex-col items-center justify-center lg:p-4">
-        <div className="flex max-w-[90%] flex-col items-center justify-center gap-4 pt-[20rem] text-center md:pt-[18rem] lg:pt-[25rem] xl:pt-[25rem]  ">
+        <div className="flex max-w-[90%] flex-col items-center justify-center gap-4 pt-[20rem] text-center md:pt-[18rem] lg:pt-[22rem] xl:pt-[20rem]  ">
           <h1 className=" inline-block bg-gradient-to-r from-slate-600 via-slate-500 to-slate-400 bg-clip-text text-7xl font-extrabold text-transparent lg:text-9xl">
             {props.title}
           </h1>
@@ -55,3 +51,5 @@ export default function Hero(props: HeroProps) {
     </div>
   );
 }
+
+export default Hero;
