@@ -3,28 +3,33 @@
 import OpenAI from "openai";
 import prisma from "./utils";
 import { revalidatePath } from "next/cache";
-import { QueryTourTypes, ChatMessageTypes, TourProps } from "@/utils/types";
+import { QueryTourTypes, TourProps} from "@/utils/types";
+
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export const generateChatResponse = async (chatMessage: ChatMessageTypes[]) => {
+export const generateChatResponse = async (chatMessage: OpenAI.Chat.ChatCompletionMessageParam[]) => {
   try {
     const response = await openai.chat.completions.create({
       messages: [
         {
-          role: "system",
+          role: "system" ,
           content: "You are a helpful assistant.",
         },
         ...chatMessage,
+
       ],
       model: "gpt-3.5-turbo",
       temperature: 0,
       max_tokens: 200,
     });
+    console.log(chatMessage)
+
 
     return {
+
       message: response.choices[0].message,
       tokens: response.usage?.total_tokens,
     };
@@ -97,7 +102,7 @@ export const createNewTour = async (tour: TourProps) => {
 
 export const getAllTours = async (userId: string, searchTerm: string) => {
   const whereClause = {
-    userId, // Add this line to include the userId in the query
+    userId,
     ...(searchTerm && {
       OR: [
         {
