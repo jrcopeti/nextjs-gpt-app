@@ -47,7 +47,7 @@ function NewTour() {
       }
 
       const newTour = await generateTourResponse(cityCountry);
-       console.log("newTour", newTour);
+      console.log("newTour", newTour);
       if (!newTour) {
         throw new Error("No matching tours. Please try again.");
       }
