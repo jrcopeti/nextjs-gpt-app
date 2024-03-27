@@ -1,6 +1,7 @@
 "use client";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import OpenAi from "openai";
 
 import {
   fetchUserTokensbyId,
@@ -10,7 +11,7 @@ import {
 
 import TypewriterEffect from "./TypewriterEffect";
 import { useAuth } from "@clerk/nextjs";
-import { QueryProps } from "@/utils/types";
+
 import toast from "react-hot-toast";
 
 import { FaArrowUpFromBracket } from "react-icons/fa6";
@@ -20,11 +21,13 @@ import { BsChatRightDots, BsPerson } from "react-icons/bs";
 
 function Chat() {
   const [inputText, setInputText] = useState<string>("");
-  const [messages, setMessages] = useState<QueryProps[]>([]);
+  const [messages, setMessages] = useState<
+    OpenAi.Chat.ChatCompletionMessageParam[]
+  >([]);
   const { userId } = useAuth();
 
   const { mutate: createQuery, isPending } = useMutation({
-    mutationFn: async (query: QueryProps) => {
+    mutationFn: async (query: OpenAi.Chat.ChatCompletionMessageParam) => {
       if (!userId) {
         return <div>Not signed in</div>;
       }
@@ -60,10 +63,13 @@ function Chat() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const query: QueryProps = { role: "user", content: inputText };
+    const query: OpenAi.Chat.ChatCompletionMessageParam = {
+      role: "user",
+      content: inputText,
+    };
 
     createQuery(query);
-    setMessages((prev: QueryProps[]) => [...prev, query]);
+    setMessages((prev) => [...prev, query]);
     setInputText("");
   };
 
@@ -83,7 +89,7 @@ function Chat() {
         </div>
       </div>
 
-      <div className="relative grid min-h-[calc(100vh-8rem)]  grid-rows-[1fr,auto]">
+      <div className="relative grid min-h-[calc(100dvh-11.5rem)]  grid-rows-[1fr,auto]">
         <div>
           {messages.map(({ role, content }, index) => {
             const avatar =
@@ -96,9 +102,9 @@ function Chat() {
               role === "user" ? "bg-base-100" : "bg-primary-content";
             const displayContent =
               role === "user" ? (
-                content
+                (content as string)
               ) : (
-                <TypewriterEffect text={content} delay={20} />
+                <TypewriterEffect text={content as string} delay={20} />
               );
 
             return (
@@ -107,9 +113,7 @@ function Chat() {
                 className={`${background} -mx-8 flex border-b border-base-200 px-8 py-6 text-lg leading-loose`}
               >
                 <span className="mr-4 text-xl text-primary">{avatar}</span>
-                <div className="max-w-3xl">
-                  <span>{displayContent}</span>
-                </div>
+                <div className="max-w-3xl">{displayContent}</div>
               </div>
             );
           })}
@@ -118,10 +122,7 @@ function Chat() {
           )}
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="fixed bottom-5 w-[90%] pt-12 lg:max-w-5xl "
-        >
+        <form onSubmit={handleSubmit} className="mt-4 max-w-5xl ">
           <div className="join w-full ">
             <input
               required
