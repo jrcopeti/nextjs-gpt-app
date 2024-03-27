@@ -12,7 +12,7 @@ const commissioner = Commissioner({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "GPTGenius",
   description:
-    "GPTGenius: Your AI language companion. Powered by OpenAI, it enhances your conversations, content creation, and more!",
+    "Explore the world with the help of AI",
 };
 
 export default function RootLayout({
