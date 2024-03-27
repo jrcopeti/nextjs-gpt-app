@@ -24,7 +24,12 @@ export default function Hero(props: HeroProps) {
         />
 
         <div className="absolute inset-0 ">
-          <Image src={grid} alt="Grid" fill className="object-cover opacity-80" />
+          <Image
+            src={grid}
+            alt="Grid"
+            fill
+            className="object-cover opacity-80"
+          />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-slate-700/30"></div>
       </div>
