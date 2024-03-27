@@ -8,6 +8,8 @@ import axios from "axios";
 import { redirect } from "next/navigation";
 import { TourProps } from "@/utils/types";
 import { IoArrowBack } from "react-icons/io5";
+import { getPlaiceholder } from "plaiceholder";
+import toast from "react-hot-toast";
 
 const url = `https://api.unsplash.com/search/photos?client_id=${process.env.NEXT_PUBLIC_UNSPLASH_API_KEY}&query=`;
 const blurDataUrl =
@@ -20,8 +22,25 @@ async function SingleTourPage({ params }: { params: { id: string } }) {
     redirect("/tours");
   }
 
-  const { data } = await axios.get(`${url}${tour.city}`);
-  const tourImage = data?.results[0]?.urls?.raw;
+  let tourImage = "";
+  let base64 = "";
+
+  try {
+    const { data } = await axios.get(`${url}${tour.city}`);
+
+    tourImage = data?.results[0]?.urls?.raw;
+
+    const response = await axios.get(tourImage, {
+      responseType: "arraybuffer",
+    });
+
+    const buffer = Buffer.from(response.data, "binary");
+    const plaiceholderRes = await getPlaiceholder(buffer);
+    base64 = plaiceholderRes.base64;
+    console.log(base64)
+  } catch (error) {
+    console.log(error);
+  }
 
   return (
     <div>
@@ -37,8 +56,7 @@ async function SingleTourPage({ params }: { params: { id: string } }) {
             alt={tour.title}
             priority
             className="mb-16 h-96 rounded-xl object-cover shadow-xl"
-            blurDataURL={blurDataUrl}
-            placeholder="blur"
+            blurDataURL={base64}
           />
         </div>
       )}
