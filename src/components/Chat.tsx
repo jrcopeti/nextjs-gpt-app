@@ -89,7 +89,7 @@ function Chat() {
         </div>
       </div>
 
-      <div className="relative grid min-h-[calc(100dvh-11.5rem)]  grid-rows-[1fr,auto]">
+      <div className="relative grid min-h-[calc(100dvh-13.5rem)]  grid-rows-[1fr,auto]  lg:min-h-[calc(100dvh-11.5rem)]">
         <div>
           {messages.map(({ role, content }, index) => {
             const avatar =
