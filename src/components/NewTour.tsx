@@ -47,11 +47,13 @@ function NewTour() {
       }
 
       const newTour = await generateTourResponse(cityCountry);
+       console.log("newTour", newTour);
       if (!newTour) {
         throw new Error("No matching tours. Please try again.");
       }
 
       const response = await createNewTour({ ...newTour.tour, userId });
+      console.log("response", response);
 
       queryClient.invalidateQueries({ queryKey: ["tours"] });
       const updatedTokens = await subtractedTokens(userId, newTour.tokens ?? 0);
