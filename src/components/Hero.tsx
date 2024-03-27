@@ -18,7 +18,7 @@ export default function Hero(props: HeroProps) {
           src={props.imgData}
           alt={props.imgAlt}
           fill
-          style={{ objectFit: "cover" }}
+          className="object-cover"
           blurDataURL={props.blurDataUrl}
           placeholder="blur"
         />
