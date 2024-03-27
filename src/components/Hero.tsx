@@ -1,16 +1,22 @@
-import type { StaticImageData } from "next/image";
+import { HeroProps } from "@/utils/types";
 import Image from "next/image";
 import Link from "next/link";
 import grid from "/public/grid.png";
 
-interface HeroProps {
-  imgData: StaticImageData;
-  imgAlt: string;
-  title: string;
-  blurDataUrl: string;
-}
+import fs from "node:fs/promises";
+import { getPlaiceholder } from "plaiceholder";
 
-export default function Hero(props: HeroProps) {
+async function Hero(props: HeroProps) {
+  let base64 = "";
+  try {
+    const file = await fs.readFile(props.path);
+
+    const plaiceholder = await getPlaiceholder(file);
+
+    base64 = plaiceholder.base64;
+  } catch (err) {
+    console.log(err);
+  }
   return (
     <div className="relative h-screen">
       <div className="absolute inset-0 -z-10">
@@ -18,38 +24,35 @@ export default function Hero(props: HeroProps) {
           src={props.imgData}
           alt={props.imgAlt}
           fill
-          style={{ objectFit: "cover" }}
-          blurDataURL={props.blurDataUrl}
+          className="object-cover"
+          blurDataURL={base64}
           placeholder="blur"
         />
 
         <div className="absolute inset-0 ">
-          <Image
-            src={grid}
-            alt="Grid"
-            fill
-            className="object-cover opacity-80"
-          />
+          <Image src={grid} alt="Grid" fill className="object-cover " />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-slate-700/30"></div>
       </div>
 
       <section className="z-0 flex flex-col items-center justify-center lg:p-4">
-        <div className="flex max-w-[90%] flex-col items-center justify-center gap-4 pt-[20rem] text-center md:pt-[18rem] lg:pt-[25rem] xl:pt-[25rem]  ">
+        <div className="flex max-w-[90%] flex-col items-center justify-center gap-4 pt-[20rem] text-center md:pt-[18rem] lg:pt-[22rem] xl:pt-[20rem]  ">
           <h1 className=" inline-block bg-gradient-to-r from-slate-600 via-slate-500 to-slate-400 bg-clip-text text-7xl font-extrabold text-transparent lg:text-9xl">
             {props.title}
           </h1>
           <p className="rounded-lg p-2 text-xl font-bold text-slate-600 lg:text-2xl">
-            Explore the power of AI in your next trip
+            {props.subtitle}
           </p>
           <Link
             href="/chat"
             className="btn glass btn-outline rounded-lg bg-gradient-to-r from-primary to-secondary text-3xl hover:text-slate-600"
           >
-            Get Started
+            {props.linkText}
           </Link>
         </div>
       </section>
     </div>
   );
 }
+
+export default Hero;

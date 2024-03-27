@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export interface ChatMessageTypes {
   role: "user" | "assistant" | "system" | "function";
   content: string | null;
@@ -38,4 +40,16 @@ export interface TourProps {
   countryFlag: string;
 }
 
+export interface QueryProps {
+  role: "user" | "assistant" | "system" | "function";
+  content: string | null;
+}
 
+export interface HeroProps {
+  imgData: StaticImageData;
+  imgAlt: string;
+  title: string;
+  path: string;
+  subtitle: string;
+  linkText: string;
+}
