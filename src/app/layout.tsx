@@ -10,9 +10,8 @@ const inter = Inter({ subsets: ["latin"] });
 const commissioner = Commissioner({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "GPTGenius",
-  description:
-    "Explore the world with the help of AI",
+  title: "GPT App",
+  description: "Explore the world with the help of AI",
 };
 
 export default function RootLayout({

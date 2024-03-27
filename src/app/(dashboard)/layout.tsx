@@ -17,7 +17,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
             <FaBarsStaggered className="z-40 h-8 w-8 text-primary" />
           </label>
 
-          <div className="min-h-screen bg-base-100 px-8 py-12">{children}</div>
+          <div className="min-h-dvh bg-base-100 px-8 py-12">{children}</div>
         </div>
 
         <div className="drawer-side">
@@ -32,7 +32,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
 
         <div className="pointer-events-none fixed -left-[5rem] top-0 h-[56rem] w-[56rem] opacity-60 mix-blend-color-dodge">
           <Image
-            className="absolute left-1 top-1/4 h-[60rem] w-[19rem] max-w-[79rem] -translate-x-1/2 -translate-y-1/2 lg:top-1/2 lg:w-[65rem]"
+            className="absolute left-1 top-1/4 h-[60rem] w-[30rem] max-w-[79rem] -translate-x-1/2 -translate-y-1/3 lg:top-1/2 lg:w-[65rem]"
             src={gradient}
             width={1417}
             height={1417}
