@@ -110,12 +110,14 @@ function NewTour() {
           />
 
           <button
-            className="btn btn-secondary join-item"
+            className="btn btn-secondary join-item bg-gradient-to-r from-primary to-secondary hover:text-base-content"
             type="submit"
             disabled={isPending}
           >
             {isPending ? (
-              <span className="loading loading-md text-secondary"> </span>
+              <span className="loading loading-spinner loading-md text-base-content">
+                {" "}
+              </span>
             ) : (
               "Generate Tour"
             )}

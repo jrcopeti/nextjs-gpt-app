@@ -73,7 +73,8 @@ function Chat() {
       <div>
         {messages.map(({ role, content }, index) => {
           const avatar = role === "user" ? <IoPerson /> : <RiRobot2Line />;
-          const background = role === "user" ? "bg-base-100" : "bg-primary-content";
+          const background =
+            role === "user" ? "bg-base-100" : "bg-primary-content";
           const displayContent =
             role === "user" ? (
               content
@@ -107,10 +108,10 @@ function Chat() {
           />
           <button
             disabled={isPending}
-            className="btn btn-secondary join-item text-xl "
+            className="btn btn-secondary join-item bg-gradient-to-r from-primary to-secondary text-xl hover:text-base-content"
           >
             {isPending ? (
-              <span className="loading loading-spinner loading-md text-secondary"></span>
+              <span className="loading loading-spinner loading-md text-base-content"></span>
             ) : (
               <span>
                 <FaArrowUpFromBracket />

@@ -33,17 +33,17 @@ function ToursPage() {
             required
           />
           <button
-            className="btn btn-primary join-item "
+            className="btn btn-secondary join-item bg-gradient-to-r from-primary to-secondary hover:text-base-content "
             type="button"
             disabled={isPending}
             onClick={(e) => setSearchTerm("")}
           >
             {isPending ? (
-              <div className="t loading loading-spinner loading-md text-primary "></div>
+              <div className="loading loading-spinner loading-md text-base-content"></div>
             ) : (
               <div className="flex items-center gap-2">
-                <span className='text-xl'>
-                <GrPowerReset />
+                <span className="text-xl">
+                  <GrPowerReset />
                 </span>
                 Reset
               </div>

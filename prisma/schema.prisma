@@ -23,6 +23,7 @@ model Tour {
   image String? @db.Text
   stops Json
   userId String
+  countryFlag String
   @@unique([userId, city, country])
 }
 

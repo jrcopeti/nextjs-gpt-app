@@ -35,4 +35,7 @@ export interface TourProps {
   image: string | null;
   stops: JsonValue[];
   userId: string;
+  countryFlag: string;
 }
+
+

@@ -4,6 +4,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
+import { BiMessageSquareError } from "react-icons/bi";
+import { RiTokenSwapLine } from "react-icons/ri";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(
@@ -26,27 +28,21 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
           toastOptions={{
             success: {
               duration: 5000,
-              iconTheme: {
-                primary: "#2E7D32",
-                secondary: "#FFFAEE",
-              }
+              icon: <RiTokenSwapLine size={26} color="#2b9348" />,
             },
             error: {
               duration: 5000,
-              iconTheme: {
-                primary: "#a42323",
-                secondary: "#FFFAEE",
-              }
+              icon: <BiMessageSquareError size={26} color="#b42727" />,
             },
+
             style: {
               fontSize: "16px",
               maxWidth: "500px",
               padding: "16px 24px",
               borderRadius: "10px",
-              backgroundColor: "#e5ebec",
-              color: "#713200",
+              backgroundColor: "#C8CAD0",
+              color: "#2E2E2E",
             },
-
           }}
         />
         {children}
