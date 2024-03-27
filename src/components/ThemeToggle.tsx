@@ -1,11 +1,10 @@
 "use client";
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
-import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { useState } from "react";
 
 const themes = {
   dark: "sunset",
-  light: "autumn",
+  light: "fantasy",
 };
 
 function ThemeToggle() {

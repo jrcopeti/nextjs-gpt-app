@@ -8,7 +8,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
       <div className="drawer-content">
         <label
           htmlFor="my-drawer-2"
-          className="drawer-button absolute top-2 right-4 lg:hidden"
+          className="drawer-button absolute right-4 top-2 lg:hidden"
         >
           <FaBarsStaggered className="z-40 h-8 w-8 text-primary" />
         </label>

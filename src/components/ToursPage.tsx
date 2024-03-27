@@ -33,7 +33,7 @@ function ToursPage() {
             required
           />
           <button
-            className="btn btn-primary join-item bg-gradient-to-r from-primary to-secondary hover:text-base-content "
+            className="btn btn-secondary join-item bg-gradient-to-r from-primary to-secondary hover:text-base-content "
             type="button"
             disabled={isPending}
             onClick={(e) => setSearchTerm("")}
