@@ -19,10 +19,13 @@ async function SingleTourPage({ params }: { params: { id: string } }) {
   if (!tour) {
     redirect("/tours");
   }
-
-  const { data } = await axios.get(`${url}${tour.city}`);
-  const tourImage = data?.results[0]?.urls?.raw;
-
+  let tourImage;
+  try {
+    const { data } = await axios.get(`${url}${tour.city}`);
+    tourImage = data?.results[0]?.urls?.raw;
+  } catch (error) {
+    console.error(error);
+  }
   return (
     <div>
       <Link href="/tours" className="btn btn-primary btn-sm mb-12 ">

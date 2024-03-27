@@ -53,7 +53,6 @@ function NewTour() {
       }
 
       const response = await createNewTour({ ...newTour.tour, userId });
-      console.log("response", response);
 
       queryClient.invalidateQueries({ queryKey: ["tours"] });
       const updatedTokens = await subtractedTokens(userId, newTour.tokens ?? 0);

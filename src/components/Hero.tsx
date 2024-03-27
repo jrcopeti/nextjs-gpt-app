@@ -8,6 +8,8 @@ interface HeroProps {
   imgAlt: string;
   title: string;
   blurDataUrl: string;
+  subtitle: string;
+  linkText: string;
 }
 
 export default function Hero(props: HeroProps) {
@@ -40,13 +42,13 @@ export default function Hero(props: HeroProps) {
             {props.title}
           </h1>
           <p className="rounded-lg p-2 text-xl font-bold text-slate-600 lg:text-2xl">
-            Explore the power of AI in your next trip
+            {props.subtitle}
           </p>
           <Link
             href="/chat"
             className="btn glass btn-outline rounded-lg bg-gradient-to-r from-primary to-secondary text-3xl hover:text-slate-600"
           >
-            Get Started
+            {props.linkText}
           </Link>
         </div>
       </section>
