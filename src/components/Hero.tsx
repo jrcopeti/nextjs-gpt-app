@@ -1,19 +1,10 @@
-import type { StaticImageData } from "next/image";
+import { HeroProps } from "@/utils/types";
 import Image from "next/image";
 import Link from "next/link";
 import grid from "/public/grid.png";
 
 import fs from "node:fs/promises";
 import { getPlaiceholder } from "plaiceholder";
-
-interface HeroProps {
-  imgData: StaticImageData;
-  imgAlt: string;
-  title: string;
-  path: string;
-  subtitle: string;
-  linkText: string;
-}
 
 async function Hero(props: HeroProps) {
   let base64 = "";

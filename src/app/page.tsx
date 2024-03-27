@@ -10,7 +10,7 @@ function Homepage() {
         imgAlt="hero-image"
         title="GPT APP"
         path = "public/homepage-hero.jpg"
-        subtitle= "A simple GPT-3 app built with Next.js and Tailwind CSS"
+        subtitle= "Explore the world with the help of AI"
         linkText= "Get Started"
       />
     </div>

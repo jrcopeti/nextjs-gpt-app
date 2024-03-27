@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.9",
+    "@clerk/themes": "^1.7.10",
     "@plaiceholder/next": "^3.0.0",
     "@prisma/client": "^5.5.2",
     "@tanstack/react-query": "^5.8.1",
