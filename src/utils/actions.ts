@@ -83,12 +83,15 @@ export const getExistingTour = async ({
   city,
   country,
 }: QueryTourTypes) => {
+  city = city.toLowerCase();
+  country = country.toLowerCase();
   return prisma.tour.findUnique({
     where: {
       userId_city_country: {
         userId,
         city,
         country,
+
       },
     },
   });
