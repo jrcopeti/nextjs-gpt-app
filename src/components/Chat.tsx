@@ -122,8 +122,11 @@ function Chat() {
           )}
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-4 max-w-5xl ">
-          <div className="join w-full absolute ">
+        <form
+          onSubmit={handleSubmit}
+          className=" sticky inset-0 mt-2 h-full max-w-[50rem]"
+        >
+          <div className="join w-full ">
             <input
               required
               type="text"

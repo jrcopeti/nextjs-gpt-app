@@ -47,7 +47,7 @@ function NewTour() {
       }
 
       const newTour = await generateTourResponse(cityCountry);
-      console.log("newTour", newTour);
+
       if (!newTour) {
         throw new Error("No matching tours. Please try again.");
       }
@@ -78,7 +78,6 @@ function NewTour() {
       country: typeof country === "string" ? country.toLowerCase() : "",
       userId: userId as string,
     };
-    console.log("cityCountryInput", cityCountryInput);
 
     createNewTourOnSubmit(cityCountryInput);
   };
