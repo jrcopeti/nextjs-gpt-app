@@ -118,7 +118,7 @@ function Chat() {
             );
           })}
           {isPending && (
-            <span className="loading loading-ring loading-lg"></span>
+            <span className="loading loading-ring loading-lg mt-2"></span>
           )}
         </div>
 

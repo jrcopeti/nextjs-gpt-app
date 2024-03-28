@@ -52,7 +52,7 @@ function ToursPage() {
         </div>
       </form>
       {isPending ? (
-        <span className="loading loading-spinner loading-lg mx-4"></span>
+        <span className="loading loading-ring loading-lg mx-4"></span>
       ) : (
         <ToursList tours={(data as TourProps[]) || []} />
       )}
