@@ -13,11 +13,12 @@ import { GrPowerReset } from "react-icons/gr";
 function ToursPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const { userId } = useAuth();
+  const searchTermLower = searchTerm.toLowerCase();
 
   const { data, isPending } = useQuery({
-    queryKey: ["tours", searchTerm],
+    queryKey: ["tours", searchTermLower],
     queryFn: () =>
-      userId ? getAllTours(userId, searchTerm) : Promise.resolve(null),
+      userId ? getAllTours(userId, searchTermLower) : Promise.resolve(null),
   });
 
   return (

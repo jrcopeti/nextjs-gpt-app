@@ -123,7 +123,7 @@ function Chat() {
         </div>
 
         <form onSubmit={handleSubmit} className="mt-4 max-w-5xl ">
-          <div className="join w-full ">
+          <div className="join w-full absolute ">
             <input
               required
               type="text"

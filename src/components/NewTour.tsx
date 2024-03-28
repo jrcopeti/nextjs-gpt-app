@@ -70,11 +70,15 @@ function NewTour() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
+    const city = formData.get("city");
+    const country = formData.get("country");
+
     const cityCountryInput: cityCountryInput = {
-      city: formData.get("city") as string,
-      country: formData.get("country") as string,
+      city: typeof city === "string" ? city.toLowerCase() : "",
+      country: typeof country === "string" ? country.toLowerCase() : "",
       userId: userId as string,
     };
+    console.log("cityCountryInput", cityCountryInput);
 
     createNewTourOnSubmit(cityCountryInput);
   };
