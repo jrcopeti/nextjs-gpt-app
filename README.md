@@ -6,7 +6,8 @@ https://nextgptapp.vercel.app/
 ![Screenshot](public/screenshot.png)
 
 ## Overview
-Welcome to the GPT App! This is an full-stack web application, built with Next.js and TypeScript, that uses Open AI API to generate text based on user input, just like chat GPT. On top of that, it also provides a city guide tour. Just input a city and country, and our app will guide you through the best places to visit, things to do, and experiences to enjoy.
+Welcome to the GPT App!
+This is an full-stack web application, built with Next.js and TypeScript, that uses Open AI API to generate text based on user input, just like chat GPT. On top of that, it also provides a city guide tour. Just write a city and country, and it will guide you through the best places to visit, things to do, and experiences to enjoy.
 
 ## Features
 - **Dynamic Text Generation**: Utilizing GPT-3.5 turbo, the app generates text based on user inpu.
@@ -21,4 +22,5 @@ Welcome to the GPT App! This is an full-stack web application, built with Next.j
 - Prisma to interact with the database
 - OpenAI API
 - Tailwind CSS and Daisy UI for styling
+- Clerk as authentication provider
 - Vercel for deployment
