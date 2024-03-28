@@ -36,7 +36,7 @@ async function Hero(props: HeroProps) {
       </div>
 
       <section className="z-0 flex flex-col items-center justify-center lg:p-4">
-        <div className="absolute top-[40%] flex flex-col items-center justify-center gap-4 text-center  ">
+        <div className="flex max-w-[90%] flex-col items-center justify-center gap-4 pt-[17rem] text-center md:pt-[21rem] lg:pt-[14rem] xl:pt-[14rem]  ">
           <h1 className=" inline-block bg-gradient-to-r from-slate-600 via-slate-500 to-slate-400 bg-clip-text text-7xl font-extrabold text-transparent lg:text-9xl">
             {props.title}
           </h1>
