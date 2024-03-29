@@ -21,6 +21,7 @@ This is an full-stack web application, built with Next.js and TypeScript, that u
 - PostgreSQL as database
 - Prisma to interact with the database
 - OpenAI API
+- TanStack React Query for syncing server data with the client state
 - Tailwind CSS and Daisy UI for styling
 - Clerk as authentication provider
 - Vercel for deployment
