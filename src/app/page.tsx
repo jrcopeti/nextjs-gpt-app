@@ -10,7 +10,7 @@ function Homepage() {
         imgAlt="hero-image"
         title="GPT APP"
         path = "public/homepage-hero.jpg"
-        subtitle= "Explore the world with the help of AI"
+        subtitle= "A Chat-GPT like app with a tour guide"
         linkText= "Get Started"
       />
     </div>
