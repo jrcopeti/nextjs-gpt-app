@@ -27,14 +27,15 @@ This is an full-stack web application, built with Next.js and TypeScript, that u
 - Clerk as authentication provider
 - Vercel for deployment
 
-## Desktop view
+## Desktop view - Dark mode
 
 ![Desktop View](public/screenshots/desktop/1.png)
 ![Desktop View](public/screenshots/desktop/2.png)
 ![Desktop View](public/screenshots/desktop/3.png)
 ![Desktop View](public/screenshots/desktop/4.png)
 
-## Mobile view
+## Mobile view - Light mode
+
 ![Mobile View](public/screenshots/mobile/1.png)
 ![Mobile View](public/screenshots/mobile/2.png)
 ![Mobile View](public/screenshots/mobile/3.png)
